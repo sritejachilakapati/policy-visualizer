@@ -17,20 +17,20 @@
   background-size: cover;
 }
 
-.heading {
+.landing-heading {
   color: navy;
   font-weight: bold;
 }
 
 @media screen and (min-width: 1201px) {
-  .heading {
+  .landing-heading {
     font-size: 5.5em;
     text-shadow: 3px 3px 4px black;
   }
 }
 
 @media screen and (max-width: 1200px) {
-  .heading {
+  .landing-heading {
     font-size: 7.1vw;
     text-shadow: 2px 2px 3px black;
   }

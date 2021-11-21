@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Container, Row, Form, Button } from 'react-bootstrap';
 import '../assets/styles/LandingPage.css';
-import { API } from '../config';
+import { fetchPolicies } from '../config';
 import RenderPolicies from './RenderPolicies';
 
 function LandingPage() {
@@ -29,15 +29,10 @@ function LandingPage() {
 
   const size = viewPortWidth >= 1200 ? {size: 'lg'} : viewPortWidth >= 768 ? {} : {size: 'sm'};
 
-  const fetchPolicies = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    let filter = e.target.filter.value;
-    let paramsObj = { filterBy: e.target.filterBy.value };
-
-    const URI = API + filter + '?' + new URLSearchParams(paramsObj);
-    fetch(URI)
-    .then(res => res.json())
-    .then(policies => setPolicies(policies));
+    fetchPolicies(e.target.filter.value, e.target.filterBy.value)
+    .then(policies => setPolicies(policies))
   }
 
   return (
@@ -47,12 +42,12 @@ function LandingPage() {
           <div className='main' style={{width: '100%'}}>
             <Row className='justify-content-center'>
               <Col xs='12' className='d-flex justify-content-center'>
-                <p className='heading'>Search for a policy</p>
+                <p className='landing-heading'>Search for a policy</p>
               </Col>
             </Row>
             <Row>
               <Col xs={12} className='d-flex justify-content-center'>
-                <Form onSubmit={fetchPolicies} style={{width: '100%'}}>
+                <Form onSubmit={handleSubmit} style={{width: '100%'}}>
                   <Row className='d-flex justify-content-center gx-0'>
                     <Col xs={8} md={8}>
                       <Form.Control {...size} type='text' placeholder={placeholderText} required name='filter' id='filter' />

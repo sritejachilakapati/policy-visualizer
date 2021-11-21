@@ -21,3 +21,21 @@ table tbody {
   }
 }
 
+.region-heading {
+  color: navy;
+  font-weight: bold;
+}
+
+@media screen and (min-width: 1201px) {
+  .region-heading {
+    font-size: 4em;
+    text-shadow: 3px 3px 4px black;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .region-heading {
+    font-size: 6vw;
+    text-shadow: 2px 2px 3px black;
+  }
+}
