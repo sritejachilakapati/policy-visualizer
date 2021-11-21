@@ -1,0 +1,10 @@
+table thead {
+  background-color: navy;
+  color: whitesmoke;
+  text-align: center;
+}
+
+table tbody {
+  background-color: whitesmoke;
+  text-align: center;
+}
