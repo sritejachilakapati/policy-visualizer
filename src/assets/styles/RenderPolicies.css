@@ -8,3 +8,16 @@ table tbody {
   background-color: whitesmoke;
   text-align: center;
 }
+
+@media screen and (min-width: 769px) {
+  table {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  table {
+    font-size: 0.7em;
+  }
+}
+

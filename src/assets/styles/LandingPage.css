@@ -1,6 +1,7 @@
 .landing-bg {
   position: relative;
   z-index: 1;
+  overflow-x: hidden;
 }
 
 .landing-bg::before {
@@ -28,7 +29,6 @@
   }
 }
 
-/* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
 @media screen and (max-width: 1200px) {
   .heading {
     font-size: 7.1vw;

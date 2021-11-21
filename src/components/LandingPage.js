@@ -70,8 +70,8 @@ function LandingPage() {
                   </Row>
                 </Form>
               </Col>
-              {policyList ? (<RenderPolicies policyList={policyList} />) : null}
             </Row>
+            {policyList ? (<RenderPolicies policyList={policyList} />) : null}
           </div>
         </div>
       </Container>
