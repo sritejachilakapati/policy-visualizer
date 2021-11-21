@@ -28,8 +28,8 @@ function RegionVisualization() {
 
   return (
     <div className='region-bg'>
-      <Container>
-        <div className='d-flex justify-content-center pt-5' style={{height: '100vh'}}>
+      <Container className='region-container'>
+        <div className='d-flex pt-5 justify-content-center' style={{height: '94vh', overflow: 'hidden'}}>
           <div className='main' style={{width: '100%'}}>
             <Row className='justify-content-center'>
               <Col xs='12' className='d-flex justify-content-center'>

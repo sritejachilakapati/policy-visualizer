@@ -16,3 +16,7 @@
   background-image: url('../images/background-2.jpg');
   background-size: cover;
 }
+
+.bar-div {
+  background-color: whitesmoke;
+}

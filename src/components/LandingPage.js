@@ -38,7 +38,7 @@ function LandingPage() {
   return (
     <div className='landing-bg'>
       <Container>
-        <div className='d-flex align-items-center justify-content-center' style={{height: '100vh'}}>
+        <div className='d-flex align-items-center justify-content-center' style={policyList ? {height: '100vh'} : {height: '94vh'}}>
           <div className='main' style={{width: '100%'}}>
             <Row className='justify-content-center'>
               <Col xs='12' className='d-flex justify-content-center'>
