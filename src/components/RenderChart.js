@@ -1,23 +1,13 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-import { getMonth } from 'date-fns';
 
 function RenderChart({policyList, region}) {
-
-  // Creating an array of length 12 with all zeroes. Each element represents the count 
-  // of policies at each month from Jan-Dec
-  var policyCount = new Array(12).fill(0);
-
-  policyList.forEach(policy => {
-    let month = getMonth(new Date(policy.DATE_OF_PURCHASE)); // Getting month of purchase of every policy
-    policyCount[month] += 1; // Incrementing the policy data array
-  })
 
   const data = {
     labels: ['January','February','March','April','May','June','July','August','September','October','November','December'],
     datasets: [{
       label: 'No. of Policies',
-      data: policyCount,
+      data: policyList,
       backgroundColor: [
         'rgba(255,127,0,0.5)',
         'rgba(255,0,0,0.5)',
@@ -50,20 +40,10 @@ function RenderChart({policyList, region}) {
     }]
   }
 
-  const options = {
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }]
-    }
-  }
-
   return (
     <>
       <div className='bar-div'>
-        <Bar width='1200px' height='530px' data={data} options={options} />
+        <Bar width='1200px' height='530px' data={data} />
       </div>
       <center><div className='mt-2'>Monthly data of No. of policies sold in {region} region</div></center>
     </>

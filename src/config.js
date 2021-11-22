@@ -1,4 +1,4 @@
-export const API = 'http://localhost:8080/api/policy/';
+export const API = process.env.REACT_APP_API_URL;
 
 export const fetchPolicies = (filterValue, filterBy) => {
   let paramsObj = { filterBy };
