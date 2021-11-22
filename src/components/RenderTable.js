@@ -37,7 +37,7 @@ const COLUMNS = [
 
 const RenderTable = ({policyList}) => {
 
-  const [policies, setPolicies] = useState(policyList); //store policy list in a state
+  const [policies, setPolicies] = useState(policyList); //store policy list in a state/set state to force a re render
 
   const [show, setShow] = useState(false); //Modal state
   const [record, setRecord] = useState(null); //Selected record
@@ -67,6 +67,8 @@ const RenderTable = ({policyList}) => {
   //form submit
   const handleSubmit = (e) => {
     e.preventDefault();
+    setSuccess(false);
+    setFailure({show: false, message: ''});
     let premium = Number(e.target.premium.value);
     if (premium === record.PREMIUM) {
       //do nothing
@@ -101,14 +103,14 @@ const RenderTable = ({policyList}) => {
       })
       .catch(err => {
         setFailure({show: true, message: 'Your request couldn\'t be processed at this time. Please try again later'});
-      });
+      })
+      .finally(() => setEditable(false)); //close modal
     }
-    setEditable(false); //close modal
   }
   
   //useTable requirements
-  const columns = useMemo(() => COLUMNS,[]);
-  const data = useMemo(() => policies, [policies]);
+  var columns = useMemo(() => COLUMNS,[]);
+  var data = useMemo(() => policies ? policies : [], [policies]); //initialize data to empty array if no policies initially
 
   const { 
     getTableProps, 
@@ -227,7 +229,7 @@ const RenderTable = ({policyList}) => {
       <div className='d-flex justify-content-end'>
         <button className='btn btn-info' onClick={() => window.location.reload(false)}>Clear Query</button>
       </div>
-      <Table {...getTableProps()} responsive striped hover>
+      <Table size='sm' {...getTableProps()} responsive striped hover>
         <thead>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -269,15 +271,4 @@ const RenderTable = ({policyList}) => {
   )
 }
 
-function RenderPolicies({policyList}) {
-
-  return (
-    <div>
-      <hr />
-      <center><h4>{policyList.length} {policyList.length === 1 ? 'policy' : 'policies'} found</h4></center>
-      {policyList.length ? <RenderTable policyList={policyList} /> : null}      
-    </div>
-  )
-}
-
-export default RenderPolicies
+export default RenderTable;

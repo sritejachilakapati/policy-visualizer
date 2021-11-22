@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Col, Container, Row, Form, Button } from 'react-bootstrap';
 import '../assets/styles/LandingPage.css';
 import { fetchPolicies } from '../config';
-import RenderPolicies from './RenderPolicies';
+import Loading from './LoadingComponent';
+import RenderTable from './RenderTable';
 
 function LandingPage() {
   const [placeholderText, setPlaceHolder] = useState('Enter the filter value');
   const [viewPortWidth, setWidth] = useState(window.innerWidth);
-  const [policyList, setPolicies] = useState(null)
+  const [policyList, setPolicies] = useState(null);
+  const [isloading, setLoading] = useState(false);
+  const [error, setError] = useState({isError: false, message: ''});
 
   const updateMedia = () => {
     setWidth(window.innerWidth);
@@ -31,14 +34,22 @@ function LandingPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError(false);
     fetchPolicies(e.target.filter.value, e.target.filterBy.value)
-    .then(policies => setPolicies(policies))
+    .then(policies => {
+      setPolicies(policies);
+      setLoading(false);
+    })
+    .catch(err => {
+      setError({isError: true, message: err.message});
+    })
   }
 
   return (
     <div className='landing-bg'>
       <Container>
-        <div className='d-flex align-items-center justify-content-center' style={policyList ? {height: '100vh'} : {height: '94vh'}}>
+        <div className='d-flex align-items-center justify-content-center' style={{height: '94vh'}}>
           <div className='main' style={{width: '100%'}}>
             <Row className='justify-content-center'>
               <Col xs='12' className='d-flex justify-content-center'>
@@ -66,7 +77,14 @@ function LandingPage() {
                 </Form>
               </Col>
             </Row>
-            {policyList ? (<RenderPolicies policyList={policyList} />) : null}
+            {isloading ? (<Loading />) : error.isError ? (<p>{error.message}</p>) : null }
+            {policyList ? (
+            <div>
+              <hr />
+              <center><h4>{policyList.length} {policyList.length === 1 ? 'policy' : 'policies'} found</h4></center>
+              {policyList.length ? <RenderTable key={policyList} policyList={policyList} /> : null}      
+            </div>
+            ) : null}
           </div>
         </div>
       </Container>

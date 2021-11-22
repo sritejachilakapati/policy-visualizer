@@ -2,7 +2,7 @@ import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import { getMonth } from 'date-fns';
 
-function RenderChart({policyList}) {
+function RenderChart({policyList, region}) {
 
   // Creating an array of length 12 with all zeroes. Each element represents the count 
   // of policies at each month from Jan-Dec
@@ -61,9 +61,12 @@ function RenderChart({policyList}) {
   }
 
   return (
-    <div className='bar-div'>
-      <Bar width='1200px' height='540px' data={data} options={options} />
-    </div>
+    <>
+      <div className='bar-div'>
+        <Bar width='1200px' height='530px' data={data} options={options} />
+      </div>
+      <center><div className='mt-2'>Monthly data of No. of policies sold in {region} region</div></center>
+    </>
   )
 }
 

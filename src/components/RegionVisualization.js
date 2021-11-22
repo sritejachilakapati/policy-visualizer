@@ -3,11 +3,15 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { fetchPolicies } from '../config';
 import '../assets/styles/RegionVisualization.css';
 import RenderChart from './RenderChart';
+import Loading from './LoadingComponent';
 
 function RegionVisualization() {
 
   const [policies, setPolicies] = useState(null);
   const [viewPortWidth, setWidth] = useState(window.innerWidth);
+  const [isloading, setLoading] = useState(false);
+  const [error, setError] = useState({isError: false, message: ''});
+  const [region, setRegion] = useState(null);
 
   const updateMedia = () => {
     setWidth(window.innerWidth);
@@ -22,8 +26,16 @@ function RegionVisualization() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetchPolicies(e.target.region.value, 'region')
-    .then(policies => setPolicies(policies))
+    setLoading(true);
+    setError(false);
+    fetchPolicies(region, 'region')
+    .then(policies => {
+      setPolicies(policies);
+      setLoading(false);
+    })
+    .catch(err => {
+      setError({isError: true, message: err.message});
+    })
   }
 
   return (
@@ -41,7 +53,7 @@ function RegionVisualization() {
               <Form onSubmit={handleSubmit} style={{width: '100%'}}>
                   <Row className='d-flex justify-content-center'>
                     <Col xs={7}>
-                      <Form.Select {...size} name='region' id='region' defaultValue='' required>
+                      <Form.Select {...size} name='region' id='region' value={region} onChange={(e) => setRegion(e.target.value)} defaultValue='' required>
                         <option value='' hidden disabled>Select a Region</option>
                         {['North','East','West','South'].map(region => (
                           <option key={region} value={region}>{region}</option>
@@ -55,11 +67,12 @@ function RegionVisualization() {
                 </Form>
               </Col>
             </Row>
+            {isloading ? (<Loading />) : error.isError ? (<p>{error.message}</p>) : null }
             {policies ? (
               <div>
                 <hr />
                 <center><h4>{policies.length} {policies.length === 1 ? 'policy' : 'policies'} found</h4></center>
-                {policies.length ? <RenderChart policyList={policies} /> : null}
+                {policies.length ? <RenderChart key={policies} region={region} policyList={policies} /> : null}
               </div>
             ) : null}
           </div>

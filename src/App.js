@@ -6,20 +6,14 @@ import NavbarComponent from './components/Navbar';
 import RegionVisualization from './components/RegionVisualization'
 
 function App() {
-  const styles={
-    display: 'flex',
-    flexDirection: 'column'
-  }
 
   return (
     <BrowserRouter>
-      <div style={styles}>
-        <NavbarComponent />
-        <Routes>
-          <Route exact path='/' element={<LandingPage />} />
-          <Route path='/visualize' element={<RegionVisualization />} />
-        </Routes>
-      </div>
+      <NavbarComponent />
+      <Routes>
+        <Route exact path='/' element={<LandingPage />} />
+        <Route path='/visualize' element={<RegionVisualization />} />
+      </Routes>
     </BrowserRouter>
   )
 }
